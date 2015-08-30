@@ -2,53 +2,52 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.Arrays;
 
-  public class RestaurantTest {
+  public class StylistTest {
     @Rule
     public DatabaseRule database = new DatabaseRule();
 
     @Test
     public void all_emptyAtFirst() {
-      assertEquals(Restaurant.all().size(), 0);
+      assertEquals(Stylist.all().size(), 0);
     }
 
     @Test
-    public void equals_returnTrueIfRestaurantsAreTheSame() {
-      Restaurant firstRestaurant = new Restaurant("mi mero mole", "9:00-15-00", "23424231", 5, 1);
-      Restaurant secondRestaurant = new Restaurant("mi mero mole", "9:00-15-00", "23424231", 5, 1);
-      assertTrue(firstRestaurant.equals(secondRestaurant));
+    public void equals_returnTrueIfStylistsAreTheSame() {
+//      Stylist firstStylist = new Stylist("mi mero mole", "9:00-15-00", "23424231", 5, 1);
+//      Stylist secondStylist = new Stylist("mi mero mole", "9:00-15-00", "23424231", 5, 1);
+      assertTrue(firstStylist.equals(secondStylist));
     }
 
     @Test
     public void save_savesIntoDatabase_true() {
-      Restaurant myRestaurant = new Restaurant("mi mero mole", "9:00-15-00", "23424231", 5, 1);
-      myRestaurant.save();
-      assertTrue(Restaurant.all().get(0).equals(myRestaurant));
+//      Stylist myStylist = new Stylist("mi mero mole", "9:00-15-00", "23424231", 5, 1);
+      myStylist.save();
+      assertTrue(Stylist.all().get(0).equals(myStylist));
     }
 
     @Test
-    public void find_findRestaurantInDatabase_true() {
-      Restaurant myRestaurant = new Restaurant("mi mero mole", "9:00-15-00", "23424231", 5, 1);
-      myRestaurant.save();
-      Restaurant savedRestaurant = Restaurant.find(myRestaurant.getId());
-      assertTrue(myRestaurant.equals(savedRestaurant));
+    public void find_findStylistInDatabase_true() {
+  //    Stylist myStylist = new Stylist("mi mero mole", "9:00-15-00", "23424231", 5, 1);
+      myStylist.save();
+      Stylist savedStylist = Stylist.find(myStylist.getId());
+      assertTrue(myStylist.equals(savedStylist));
     }
 
     @Test
     public void update_updatesInformationForAnObject() {
-      Restaurant newRest = new Restaurant("mi mero mole", "9:00-15-00", "23424231", 5, 1);
-      newRest.save();
-      newRest.updateRating(1);
-      Restaurant savedRest = Restaurant.find(newRest.getId());
-      assertEquals(1, savedRest.getRating());
+    //  Stylist newStylist = new Stylist("mi mero mole", "9:00-15-00", "23424231", 5, 1);
+      newStylist.save();
+      newStylist.updateRating(1);
+      Stylist savedStylist = Stylist.find(newStylist.getId());
+      assertEquals(1, savedStylist.getRating());
     }
 
     @Test
     public void delete_checkThatDeletesFromDatabase_false() {
-      Restaurant newRestaurant = new Restaurant("mi mero mole", "9:00-15-00", "23424231", 5, 1);
-      newRestaurant.save();
-      newRestaurant.delete();
-      Restaurant newRest = Restaurant.find(newRestaurant.getId());
-      assertEquals(false, newRestaurant.equals(newRest));
+  //    Stylist newStylist = new Stylist("mi mero mole", "9:00-15-00", "23424231", 5, 1);
+      newStylist.save();
+      newStylistdelete();
+      Stylist newStylist = Stylist.find(newStylist.getId());
+      assertEquals(false, newStylist.equals(newStylist));
     }
   }
-  

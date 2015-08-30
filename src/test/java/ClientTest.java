@@ -8,43 +8,43 @@ import java.util.Arrays;
 
     @Test
     public void all_emptyAtFirst() {
-      assertEquals(Cuisine.all().size(), 0);
+      assertEquals(Client.all().size(), 0);
     }
 
     @Test
-    public void equals_returnTrueIfCuisinesAreTheSame() {
-      Cuisine firstCuisine = new Cuisine("mexican");
-      Cuisine secondCuisine = new Cuisine("mexican");
-      assertTrue(firstCuisine.equals(secondCuisine));
+    public void equals_returnTrueIfClientsAreTheSame() {
+      Client firstClient = new Client("leslie knope");
+      Client secondClient = new Client("ann perkins");
+      assertTrue(firstClient.equals(secondClient));
     }
     @Test
     public void save_savesIntoDatabase_true() {
-      Cuisine myCuisine = new Cuisine("thai");
-      myCuisine.save();
-      assertTrue(Cuisine.all().get(0).equals(myCuisine));
+      Client myClient = new Client("april ludgate");
+      myClient.save();
+      assertTrue(Client.all().get(0).equals(myClient));
     }
     @Test
-    public void find_findCuisineInDatabase_true() {
-      Cuisine myCuisine = new Cuisine("greek");
-      myCuisine.save();
-      Cuisine savedCuisine = Cuisine.find(myCuisine.getId());
-      assertTrue(myCuisine.equals(savedCuisine));
+    public void find_findClientInDatabase_true() {
+      Client myClient = new Client("donna meagle");
+      myClient.save();
+      Client savedClient = Client.find(myClient.getId());
+      assertTrue(myClient.equals(savedClient));
     }
     @Test
     public void update_updatesInformationForAnObject() {
-      Cuisine newCuisine = new Cuisine("thai");
-      newCuisine.save();
-      newCuisine.update("mexican");
-      Cuisine savedCuisine = Cuisine.find(newCuisine.getId());
-      assertEquals("mexican", savedCuisine.getName());
+      Client newClient = new Client("ben wyatt");
+      newClient.save();
+      newClient.update("ron swanson");
+      Client savedClient = Client.find(newClient.getId());
+      assertEquals("tom haverford", savedClient.getName());
     }
 
     @Test
     public void delete_checkThatDeletesFromDatabase_false() {
-      Cuisine newCuisine = new Cuisine("Japanese");
-      newCuisine.save();
-      newCuisine.delete();
-      Cuisine otherCuisine = Cuisine.find(newCuisine.getId());
-      assertEquals(false, newCuisine.equals(otherCuisine));
+      Client newClient = new Client("andy dwyer");
+      newClient.save();
+      newClient.delete();
+      Client otherClient = Client.find(newClient.getId());
+      assertEquals(false, newClient.equals(otherClient));
     }
 }

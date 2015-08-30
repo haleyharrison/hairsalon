@@ -1,6 +1,6 @@
-<h2>enter a new restaurant!</h2>
+<h2>enter a new stylist!</h2>
 <br>
-<form method="post" action="/restaurants">
+<form method="post" action="/stylists">
   <div class="form-group">
     <label for="name" class="name">name</label>
     <input name="name" type="text" class="form-control" id="name">
@@ -18,7 +18,7 @@
     <input name="rating" type="text" class="form-control" id="rating">
   </div>
   <div class="form-group">
-    <input name="cuisine_id" value="$cuisine.getId()" type="hidden" class="form-control" id="cuisine_id">
+    <input name="client_id" value="$client.getId()" type="hidden" class="form-control" id="client_id">
   </div>
   <br>
   <button class="btn btn-default" type="submit">add!</button>

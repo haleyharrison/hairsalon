@@ -1,0 +1,11 @@
+#if ($stylist.getName())
+  <h2>You added: "$stylist.getName()"</h2>
+#else
+  <h2>you didn't add one!</h2>
+#end
+<br>
+<br>
+
+<form action="/clients/$client.getId()/stylists">
+  <button class="btn btn-default" type="submit">stylists</button>
+</form>

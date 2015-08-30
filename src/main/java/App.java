@@ -3,14 +3,12 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import static java.lang.System.out;
 import java.lang.*;
-
 import java.util.Map;
 import java.util.HashMap;
-
 import spark.ModelAndView;
-
 import spark.template.velocity.VelocityTemplateEngine;
 import static spark.Spark.*;
+
 
 public class App{
   public static void main(String[] args) {
@@ -24,85 +22,84 @@ public class App{
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/cuisines", (request, response) -> {
+    get("/clients", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/cuisines.vtl");
+      model.put("template", "templates/clients.vtl");
 
-      model.put("cuisines", Cuisine.all());
+      model.put("clients", Client.all());
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/cuisines/new", (request, reponse) -> {
+    get("/clients/new", (request, reponse) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/cuisine-form.vtl");
+      model.put("template", "templates/client-form.vtl");
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/cuisines", (request, reponse) -> {
+    post("/clients", (request, reponse) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
-      String cuisine = request.queryParams("cuisine");
-      Cuisine newCuisine = new Cuisine(cuisine);
-      newCuisine.save();
+      String client = request.queryParams("client");
+      Client newClient = new Client(client);
+      newClient.save();
 
-      model.put("cuisine", newCuisine);
-      model.put("template", "templates/cuisine.vtl");
+      model.put("client", newClient);
+      model.put("template", "templates/client.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/cuisines/:id/restaurants/new", (request, response) -> {
+    get("/clients/:id/stylists/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/restaurant-form.vtl");
+      model.put("template", "templates/stylist-form.vtl");
 
-      model.put("cuisine", Cuisine.find(Integer.parseInt(request.params(":id"))));
+      model.put("client", Client.find(Integer.parseInt(request.params(":id"))));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/restaurants", (request, response) -> {
+    post("/stylists", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/restaurant.vtl");
+      model.put("template", "templates/stylist.vtl");
 
       String name = request.queryParams("name");
       String hours = request.queryParams("hours");
       String contact_info = request.queryParams("contact_info");
       int rating = Integer.parseInt(request.queryParams("rating"));
-      int cuisine_id = Integer.parseInt(request.queryParams("cuisine_id"));
 
-      Restaurant newRestaurant = new Restaurant(name, hours, contact_info, rating, cuisine_id);
-      newRestaurant.save();
+      Stylist newStylist = new Stylist(name, hours, contact_info, rating);
+      newStylist.save();
 
-      model.put("cuisine", Cuisine.find(Integer.parseInt(request.queryParams("cuisine_id"))));
-      model.put("restaurant", newRestaurant);
+      model.put("client", Client.find(Integer.parseInt(request.queryParams("client_id"))));
+      model.put("stylist", newStylist);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/cuisines/:id/restaurants", (request, response) -> {
+    get("/clients/:id/stylists", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
 
-      model.put("cuisine", Cuisine.find(Integer.parseInt(request.params(":id"))));
-      model.put("restaurants", Restaurant.allByCuisine(Integer.parseInt(request.params(":id"))));
-      model.put("template", "templates/restaurants.vtl");
+      model.put("client", Client.find(Integer.parseInt(request.params(":id"))));
+      model.put("Stylists", Stylist.allByClient(Integer.parseInt(request.params(":id"))));
+      model.put("template", "templates/stylists.vtl");
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/cuisines/:cuisine_id/restaurants/:restaurant_id/info", (request, response) -> {
+    get("/clients/:client_id/stylists/:stylist_id/info", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/info.vtl");
 
-      model.put("cuisine", Cuisine.find(Integer.parseInt(request.params(":cuisine_id"))));
-      model.put("restaurant", Restaurant.find(Integer.parseInt(request.params(":restaurant_id"))));
+      model.put("client", Client.find(Integer.parseInt(request.params(":client_id"))));
+      model.put("stylist", Stylist.find(Integer.parseInt(request.params(":stylist_id"))));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/cuisines/:cuisine_id/restaurants/:restaurant_id/update", (request, response) -> {
+    get("/clients/:client_id/stylists/:stylist_id/update", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/update.vtl");
 
-      model.put("cuisine", Cuisine.find(Integer.parseInt(request.params(":cuisine_id"))));
-      model.put("restaurant", Restaurant.find(Integer.parseInt(request.params(":restaurant_id"))));
+      model.put("client", Client.find(Integer.parseInt(request.params(":client_id"))));
+      model.put("stylist", Stylist.find(Integer.parseInt(request.params(":stylist_id"))));
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -114,51 +111,39 @@ public class App{
       String contact_info = request.queryParams("contact_info");
       int rating = Integer.parseInt(request.queryParams("rating"));
 
-      Restaurant rest = Restaurant.find(Integer.parseInt(request.queryParams("restaurant_id")));
+      Stylist stylist = Stylist.find(Integer.parseInt(request.queryParams("stylist_id")));
 
-      rest.updateName(name);
-      rest.updateHours(hours);
-      rest.updateContact_info(contact_info);
-      rest.updateRating(rating);
+      stylist.updateName(name);
+      stylist.updateHours(hours);
+      stylist.updateContact_info(contact_info);
+      stylist.updateRating(rating);
 
-      model.put("restaurant", Restaurant.find(Integer.parseInt(request.queryParams("restaurant_id"))));
+      model.put("stylist", Stylist.find(Integer.parseInt(request.queryParams("stylist_id"))));
       model.put("template", "templates/success.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    // post("/delete", (request, reponse) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //
-    //   Restaurant rest = Restaurant.find(Integer.parseInt(request.queryParams("delete")));
-    //
-    //   rest.delete();
-    //
-    //   model.put("restaurants", Restaurant.allByCuisine(Integer.parseInt(request.params(":id"))));
-    //   model.put("template", "templates/restaurants.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
-
-    get("/cuisines/:cuisine_id/restaurants/:restaurant_id/delete", (request, response) -> {
+    get("/clients/:client_id/stylists/:stylist_id/delete", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
-      Cuisine cuisine = Cuisine.find(Integer.parseInt(request.params(":cuisine_id")));
-      model.put("cuisine", cuisine);
+      Client client = Client.find(Integer.parseInt(request.params(":client_id")));
+      model.put("client", client);
       String cuisine_id = request.params(":cuisine_id");
 
-      Restaurant rest = Restaurant.find(Integer.parseInt(request.params(":restaurant_id")));
-      rest.delete();
+      Stylist stylist = Stylist.find(Integer.parseInt(request.params(":stylist_id")));
+      stylist.delete();
       // model.put("template", "templates/delete.vtl");
-      response.redirect("/cuisines/" + cuisine_id + "/restaurants");
+      response.redirect("/clients/" + client_id + "/stylists");
       return null;
     });
 
-    get("/cuisines/:cuisine_id/delete", (request, response) -> {
+    get("/clients/:client_id/delete", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
-      Cuisine cuisine = Cuisine.find(Integer.parseInt(request.params(":cuisine_id")));
-      cuisine.delete();
+      Client client = Client.find(Integer.parseInt(request.params(":client_id")));
+      client.delete();
 
-      response.redirect("/cuisines" );
+      response.redirect("/clients" );
       return null;
     });
 

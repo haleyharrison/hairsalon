@@ -1,0 +1,18 @@
+<h4>stylists for $client.getName():</h4>
+
+#foreach ($stylist in $stylists)
+  #if ($stylist.getName())
+    <ul><li><a href="/clients/$client.getId()/stylists/$stylist.getId()/info">$stylist.getName()</a></li></ul>
+
+    <form action="/clients/$client.getId()/stylists/$stylist.getId()/delete">
+      <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-remove align-left" aria-hidden="true"></span></button>
+    </form>
+
+  #else
+    <h6>add something!</h6>
+  #end
+#end
+
+<form action="/clients/$client.getId()/stylists/new">
+  <button class="btn btn-default" type="submit">add a stylist</button>
+</form>
