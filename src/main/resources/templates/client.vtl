@@ -1,0 +1,9 @@
+#if ($client)
+  <h2>added: "$client.getName()"</h2>
+#else
+  <h2>no new clients were added, try again!</h2>
+#end
+
+<form action="/clients">
+  <button class="btn btn-default" type="submit">view all clients</button>
+</form>
